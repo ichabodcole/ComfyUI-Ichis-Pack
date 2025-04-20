@@ -165,7 +165,8 @@ class ICHIS_Aspect_Ratio_Plus:
         channels = 4
         latent_height = height // 8
         latent_width = width // 8
-        latent = torch.zeros([batch_size, channels, latent_height, latent_width])
+        tensor = torch.zeros([batch_size, channels, latent_height, latent_width])
+        latent = {"samples": tensor}
         
         # Return the NEXT step index that will be used
         return (width, height, latent, selected_ratio, next_step_index_internal) 
