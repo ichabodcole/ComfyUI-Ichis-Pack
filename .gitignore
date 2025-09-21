@@ -51,3 +51,6 @@ logs/
 # Local development
 *.local 
 .specstory
+
+# References
+external/

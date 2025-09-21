@@ -1,8 +1,8 @@
 Context
-- Add a new ComfyUI node to sample random image tags from a CSV keyed by image path and category.
+- Add a new ComfyUI node to sample random image tags from metadata keyed by image path and category.
 
 Scope & Objectives
-- Implement node: read CSV, filter by image and optional categories, sample random tags between min/max.
+- Implement node: read metadata, filter by image and optional categories, sample random tags between min/max.
 - Register node and add unit tests with deterministic seeds.
 - Keep implementation lightweight and follow repo conventions.
 
@@ -23,7 +23,7 @@ Findings Log
 - Added seed parameter for reproducibility; IS_CHANGED triggers when seed=0 to respect randomness.
 
 Fixes Applied
-- nodes/csv_tag_sampler.py: New node ICHIS_CSV_Tag_Sampler with CSV parsing and random sampling.
+- nodes/tag_sampler.py: Node `ICHIS_Tag_Sampler` with metadata parsing and random sampling.
 - nodes/__init__.py: Registered node in NODE_CLASS_MAPPINGS and NODE_DISPLAY_NAME_MAPPINGS.
 - tests/test_csv_tag_sampler.py: Unit tests covering formats, filtering, clamping, empty result, and seed reproducibility.
 
@@ -39,4 +39,3 @@ Lessons Learned
 Next Steps
 - If desired, add UI options: allow duplicates, per-category min/max, and output list type.
 - Extend tests to cover very large CSVs and performance.
-

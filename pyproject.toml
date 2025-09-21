@@ -17,3 +17,6 @@ addopts = "-v --cov=nodes --cov-report=term-missing"
 [tool.coverage.run]
 source = ["nodes"]
 omit = ["*/tests/*"]
+
+[tool.setuptools.packages.find]
+include = ["nodes*"]

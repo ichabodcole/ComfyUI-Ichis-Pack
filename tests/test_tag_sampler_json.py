@@ -3,12 +3,14 @@ import json
 import tempfile
 import unittest
 
-from nodes.csv_tag_sampler import ICHIS_CSV_Tag_Sampler
+from nodes.tag_sampler import ICHIS_Tag_Sampler
+from nodes.tag_file_loader import ICHIS_Tag_File_Loader
 
 
 class TestCSVTagSamplerJSON(unittest.TestCase):
     def setUp(self):
-        self.node = ICHIS_CSV_Tag_Sampler()
+        self.node = ICHIS_Tag_Sampler()
+        self.loader = ICHIS_Tag_File_Loader()
 
     def _write_json(self, data) -> str:
         fd, path = tempfile.mkstemp(suffix=".json", text=True)
@@ -24,11 +26,12 @@ class TestCSVTagSamplerJSON(unittest.TestCase):
         ]
         path = self._write_json(data)
         try:
+            metadata, _, _, _, _ = self.loader.load_tags(file_path=path)
             tags, count, tags_list = self.node.sample_tags(
-                file_path=path,
+                tag_metadata=metadata,
                 min_count=1,
                 max_count=3,
-                categories="faces,hair",
+                category_list=["faces", "hair"],
                 seed=123,
             )
             parts = [p.strip() for p in tags.split(",") if p.strip()]
@@ -47,11 +50,12 @@ class TestCSVTagSamplerJSON(unittest.TestCase):
         ]
         path = self._write_json(data)
         try:
+            metadata, _, _, _, _ = self.loader.load_tags(file_path=path)
             tags, count, tags_list = self.node.sample_tags(
-                file_path=path,
+                tag_metadata=metadata,
                 min_count=2,
                 max_count=3,
-                categories="clothes",
+                category_list=["clothes"],
                 seed=9,
             )
             parts = [p.strip() for p in tags.split(",") if p.strip()]
